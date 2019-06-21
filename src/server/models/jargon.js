@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// const data = require('../../../data/jargon');
 
 const jargonSchema = {
   name: {
@@ -10,7 +11,6 @@ const jargonSchema = {
   description: {
     type: String,
     required: true,
-    max: 255
   }
 };
 
