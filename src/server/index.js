@@ -1,9 +1,18 @@
 const express = require('express');
-const os = require('os');
+const mongoose = require('mongoose');
+const jargon = require('./routes/jargon');
+
+mongoose
+  .connect('mongodb://localhost/manage-jargon', {
+    useNewUrlParser: true,
+    useFindAndModify: false
+  })
+  .then(() => console.log('Connected to MongoDB...'));
 
 const app = express();
+app.use(express.json());
 
-app.use(express.static('dist'));
-app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
+app.use('/api/jargon/', jargon);
 
-app.listen(process.env.PORT || 8080, () => console.log(`Listening on port ${process.env.PORT || 8080}!`));
+const port = process.env.PORT || 8080;
+app.listen(port, () => console.log(`Listening on port ${port}!`));
