@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
-import './app.css';
-import ReactImage from './react.png';
+import axios from 'axios';
 
 export default class App extends Component {
-  state = { username: null };
+  state = { jargon: [] };
 
   componentDidMount() {
-    fetch('/api/getUsername')
-      .then(res => res.json())
-      .then(user => this.setState({ username: user.username }));
+    axios.get('/api/jargon/')
+      .then((res) => {
+        this.setState({ jargon: res.data });
+      });
   }
 
   render() {
-    const { username } = this.state;
+    const { jargon } = this.state;
     return (
-      <div>
-        {username ? <h1>{`Hello ${username}`}</h1> : <h1>Loading.. please wait!</h1>}
-        <img src={ReactImage} alt="react" />
-      </div>
+      <ul>
+        {jargon.map(term => (
+          <div key={term._id}>
+            <h4>{term.name}</h4>
+            <p>{term.description}</p>
+          </div>
+        ))}
+      </ul>
     );
   }
 }
