@@ -1,11 +1,25 @@
 App idea from: [https://github.com/circusstreet/react-task](https://github.com/circusstreet/react-task)
 
 Fullstack boilerplate from: [https://github.com/crsandeep/simple-react-full-stack](https://github.com/crsandeep/simple-react-full-stack)
+
+## Available Scripts
+
+Script          | Description 
+-----           | -----------
+`install`       | Installs packages that project relay on.
+`server`        | Starts back-end server.
+`client`        | Starts front-end server.
+`dev`           | Starts development server (both front-end and back-end concurrently).
+`test`          | Launches the test runner.
+`build`         | Builds the app for production to the `build` folder.
+`start`         | Starts production server.
+
+
 # Manage Jargon App
 Here are some user stories that describe some functionality of a React/Redux app, enabling a user to add, edit and delete 'jargon' items from the database.
 
 ## Read
-As an admin I want to see all available 'jargon' terms in the database
+As an admin I want to see all available 'jargon' terms in the database.
 
 ## Add
 As an admin I want to add a new 'jargon' item to the database.

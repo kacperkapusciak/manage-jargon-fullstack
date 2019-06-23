@@ -13,6 +13,8 @@
   "author": "Kacper Kapuściak",
   "license": "ISC",
   "dependencies": {
+    "ajv": "^6.10.0",
+    "ajv-async": "^1.0.1",
     "axios": "^0.19.0",
     "babel-polyfill": "^6.26.0",
     "express": "^4.16.3",
