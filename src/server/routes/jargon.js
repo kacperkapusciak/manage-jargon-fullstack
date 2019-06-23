@@ -34,4 +34,16 @@ router.put('/:id', async (req, res) => {
   return res.send(jargonTerm);
 });
 
+router.delete('/:id', async (req, res) => {
+  const jargonTerm = await Jargon.findByIdAndRemove(req.params.id);
+  if (!jargonTerm) return res.status(404).send('Jargon term not found!');
+  return res.send(jargonTerm);
+});
+
+router.get('/:id', async (req, res) => {
+  const jargonTerm = await Jargon.findById(req.params.id);
+  if (!jargonTerm) return res.status(404).send('Jargon term not found!');
+  return res.send(jargonTerm);
+});
+
 module.exports = router;
