@@ -20,4 +20,18 @@ router.post('/', async (req, res) => {
   return res.send(jargonTerm);
 });
 
+router.put('/:id', async (req, res) => {
+  const valid = await validate(req.body);
+  if (!valid) return res.status(400).send('Invalid name or description.');
+
+  const jargonTerm = await Jargon.findByIdAndUpdate(
+    req.params.id,
+    { name: req.body.name, description: req.body.description },
+    { new: true }
+  );
+
+  if (!jargonTerm) return res.status(404).send('Jargon term not found!');
+  return res.send(jargonTerm);
+});
+
 module.exports = router;
