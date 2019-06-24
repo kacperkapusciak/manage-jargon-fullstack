@@ -22,6 +22,8 @@ const userSchema = {
   }
 };
 
+// TODO: generating jwt
+
 const User = mongoose.model('User', new mongoose.Schema(userSchema));
 
 function validateUser(user) {
