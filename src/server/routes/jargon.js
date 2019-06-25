@@ -1,14 +1,16 @@
 const express = require('express');
 const { Jargon, validate } = require('../models/jargon');
+const auth = require('../middleware/auth');
+const admin = require('../middleware/admin');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   const jargonTerms = await Jargon.find().sort('name');
   return res.send(jargonTerms);
 });
 
-router.post('/', async (req, res) => {
+router.post('/', [auth, admin], async (req, res) => {
   const valid = await validate(req.body);
   if (!valid) return res.status(400).send('Invalid name or description.');
 
@@ -20,7 +22,7 @@ router.post('/', async (req, res) => {
   return res.send(jargonTerm);
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', [auth, admin], async (req, res) => {
   const valid = await validate(req.body);
   if (!valid) return res.status(400).send('Invalid name or description.');
 
@@ -34,13 +36,13 @@ router.put('/:id', async (req, res) => {
   return res.send(jargonTerm);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', [auth, admin], async (req, res) => {
   const jargonTerm = await Jargon.findByIdAndRemove(req.params.id);
   if (!jargonTerm) return res.status(404).send('Jargon term not found!');
   return res.send(jargonTerm);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
   const jargonTerm = await Jargon.findById(req.params.id);
   if (!jargonTerm) return res.status(404).send('Jargon term not found!');
   return res.send(jargonTerm);
