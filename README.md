@@ -19,7 +19,7 @@ Script          | Description
 Here are some user stories that describe some functionality of a React/Redux app, enabling a user to add, edit and delete 'jargon' items from the database.
 
 ## Read
-As an admin I want to see all available 'jargon' terms in the database.
+As ~~an admin~~ a registered user I want to see all available 'jargon' terms in the database.
 
 ## Add
 As an admin I want to add a new 'jargon' item to the database.
