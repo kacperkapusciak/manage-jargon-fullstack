@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config');
 const jargon = require('./routes/jargon');
+const users = require('./routes/users');
 
 mongoose
   .connect('mongodb://localhost/manage-jargon', {
@@ -18,6 +19,7 @@ const app = express();
 app.use(express.json());
 
 app.use('/api/jargon/', jargon);
+app.use('/api/users/', users);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => console.log(`Listening on port ${port}!`));
