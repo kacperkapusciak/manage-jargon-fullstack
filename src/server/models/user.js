@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const config = require('config');
+const jwt = require('jsonwebtoken');
 const Ajv = require('ajv');
 
 const ajv = new Ajv();
@@ -22,7 +24,10 @@ const userSchema = {
   }
 };
 
-// TODO: generating jwt
+// giving name to function expression aids debugging ↓
+userSchema.methods.generateAuthToken = function token() {
+  return jwt.sign({ _id: this._id, admin: this.admin }, config.get('jwtPrivateKey'));
+};
 
 const User = mongoose.model('User', new mongoose.Schema(userSchema));
 
