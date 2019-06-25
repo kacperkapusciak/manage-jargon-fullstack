@@ -6,7 +6,7 @@ const Ajv = require('ajv');
 const ajv = new Ajv();
 require('ajv-async')(ajv);
 
-const userSchema = {
+const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -22,14 +22,14 @@ const userSchema = {
   admin: {
     type: Boolean
   }
-};
+});
 
 // giving name to function expression aids debugging ↓
 userSchema.methods.generateAuthToken = function token() {
   return jwt.sign({ _id: this._id, admin: this.admin }, config.get('jwtPrivateKey'));
 };
 
-const User = mongoose.model('User', new mongoose.Schema(userSchema));
+const User = mongoose.model('User', userSchema);
 
 function validateUser(user) {
   const validationSchema = {

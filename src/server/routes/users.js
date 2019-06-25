@@ -9,9 +9,10 @@ router.get('/me', async (req, res) => {
   res.send(user);
 });
 
+// registering user
 router.post('/', async (req, res) => {
   const valid = await validate(req.body);
-  if (!valid) return res.status(400).send('Username or password it too short.');
+  if (!valid) return res.status(400).send('Username or password is too short.');
 
   let user = await User.findOne({ username: req.body.username });
   if (user) return res.status(400).send('Username already in use.');
@@ -24,5 +25,12 @@ router.post('/', async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
-  // TODO: generating jwt
+
+  const token = user.generateAuthToken();
+  return res.header('x-auth-token', token).send({
+    _id: user._id,
+    username: user.username,
+  });
 });
+
+module.exports = router;
