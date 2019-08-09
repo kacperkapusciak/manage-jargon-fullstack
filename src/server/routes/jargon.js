@@ -10,6 +10,49 @@ router.get('/', auth, async (req, res) => {
   return res.send(jargonTerms);
 });
 
+router.get('/tabs', auth, async (req, res) => {
+  const jargonTerms = await Jargon.find().sort('name');
+  const names = jargonTerms.map(term => term.name);
+  const firstLetters = names.map(name => name.charAt(0).toUpperCase());
+  const countCharacters = {};
+  firstLetters.forEach((letter) => {
+    if (Number.isNaN(parseInt(letter, 10)) && !countCharacters.hasOwnProperty(letter)) {
+      countCharacters[letter] = 1;
+    } else if (Number.isNaN(parseInt(letter, 10))) {
+      countCharacters[letter]++;
+    }
+  });
+  // TODO: make '123...' tab for terms starting from numbers
+  const tabs = {};
+  for (let i = 0; i < Object.keys(countCharacters).length - 2; i++) {
+    const [letter, value] = Object.entries(countCharacters)[i];
+    if (value >= 20) {
+      tabs[letter] = jargonTerms.filter(term => term.name.charAt(0) === letter);
+    } else {
+      const [nextLetter, nextValue] = Object.entries(countCharacters)[i + 1];
+      const [nextNextLetter, nextNextValue] = Object.entries(countCharacters)[i + 2];
+      if (nextValue < 20 && nextNextValue < 20) {
+        tabs[`${letter}-${nextNextLetter}`] = [
+          ...jargonTerms.filter(term => term.name.charAt(0) === letter),
+          ...jargonTerms.filter(term => term.name.charAt(0) === nextLetter),
+          ...jargonTerms.filter(term => term.name.charAt(0) === nextNextLetter)
+        ];
+        i += 2;
+      } else if (nextNextValue >= 20) {
+        tabs[`${letter}-${nextLetter}`] = [
+          ...jargonTerms.filter(term => term.name.charAt(0) === letter),
+          ...jargonTerms.filter(term => term.name.charAt(0) === nextLetter),
+        ];
+        i++;
+      } else {
+        tabs[letter] = jargonTerms.filter(term => term.name.charAt(0) === letter);
+      }
+    }
+  }
+
+  return res.send(tabs);
+});
+
 router.post('/', [auth, admin], async (req, res) => {
   const valid = await validate(req.body);
   if (!valid) return res.status(400).send('Invalid name or description.');
