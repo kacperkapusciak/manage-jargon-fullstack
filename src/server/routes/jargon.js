@@ -22,8 +22,10 @@ router.get('/tabs', auth, async (req, res) => {
       countCharacters[letter]++;
     }
   });
-  // TODO: make '123...' tab for terms starting from numbers
+
   const tabs = {};
+  tabs['123...'] = jargonTerms.filter(term => !Number.isNaN(parseInt(term.name.charAt(0), 10)));
+
   for (let i = 0; i < Object.keys(countCharacters).length - 2; i++) {
     const [letter, value] = Object.entries(countCharacters)[i];
     if (value >= 20) {
