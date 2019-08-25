@@ -5,7 +5,7 @@ const admin = require('../middleware/admin');
 
 const router = express.Router();
 
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   const jargonTerms = await Jargon.find().sort('name');
   return res.send(jargonTerms);
 });
