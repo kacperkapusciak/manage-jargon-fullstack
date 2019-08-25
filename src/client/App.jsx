@@ -1,27 +1,15 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
-export default class App extends Component {
-  state = { jargon: [] };
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
-  componentDidMount() {
-    axios.get('/api/jargon/')
-      .then((res) => {
-        this.setState({ jargon: res.data });
-      });
-  }
+const App = () => (
+  <Router>
+    <Route path="/login" component={Login} />
+    <Route path="/dashboard" component={Dashboard} />
+    <Redirect path="/" exact to="/dashboard" />
+  </Router>
+);
 
-  render() {
-    const { jargon } = this.state;
-    return (
-      <ul>
-        {jargon.map(term => (
-          <div key={term._id}>
-            <h4>{term.name}</h4>
-            <p>{term.description}</p>
-          </div>
-        ))}
-      </ul>
-    );
-  }
-}
+export default App;

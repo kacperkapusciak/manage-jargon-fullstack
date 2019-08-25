@@ -10,7 +10,7 @@ router.get('/', async (req, res) => {
   return res.send(jargonTerms);
 });
 
-router.get('/tabs', auth, async (req, res) => {
+router.get('/tabs', async (req, res) => {
   const jargonTerms = await Jargon.find().sort('name');
   const names = jargonTerms.map(term => term.name);
   const firstLetters = names.map(name => name.charAt(0).toUpperCase());
