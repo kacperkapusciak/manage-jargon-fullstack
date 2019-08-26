@@ -3,16 +3,31 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   display: flex;
-  border-bottom: 1px solid #dedede;
-  margin-bottom: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  justify-content: center;
 `;
 const TabLabel = styled.div`
   padding: 8px 10px;
-  border: ${({ active }) => (active ? '1px solid #dedede' : 'unset')};
-  border-bottom: ${({ active }) => (active ? '#fff' : 'unset')};
-  border-radius: 5px;
+  color: ${({ active }) => (active ? '#fff' : 'rgb(52, 95, 144)')};
   min-width: 60px;
+  height: 50px;
+  line-height: 33px;
   text-align: center;
+  background: ${({ active }) => (active ? 'rgb(52, 95, 144)' : '#fff')};
+  transition: all 250ms ease-in;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  &:first-child {
+    border-left: 1px solid #ccc;
+    border-radius: 20px 0 0 20px;
+    padding-left: 16px;
+  }
+  &:last-child {
+    border-right: 1px solid #ccc;
+    border-radius: 0 20px 20px 0;
+    padding-right: 16px;
+  }
 `;
 
 export const Tab = styled.div``;

@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 
 import Container from '../components/Container';
 import Input from '../components/Input';
 import TabPane, { Tab } from '../components/TabPane';
+import Card from '../components/Card';
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
 
 const Dashboard = () => {
   const [tabbedTerms, setTabbedTerms] = useState();
@@ -17,8 +29,6 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  console.log(tabbedTerms);
-
   return (
     <main>
       <Container>
@@ -27,18 +37,19 @@ const Dashboard = () => {
         <h2>All Jargon</h2>
         {tabbedTerms ? (
           <TabPane>
-            {Object.keys(tabbedTerms).map((tabName) => {
-              return (
-                <Tab key={tabName} title={tabName}>
-                  {tabbedTerms[tabName].map(({ _id, name, description }) => (
-                    <div key={_id}>
-                      <h4>{name}</h4>
-                      <p>{description}</p>
-                    </div>
+            {Object.keys(tabbedTerms).map(tabName => (
+              <Tab key={tabName} title={tabName}>
+                <Grid>
+                  {tabbedTerms[tabName].map(term => (
+                    <Card
+                      key={term._id}
+                      name={term.name}
+                      description={term.description}
+                    />
                   ))}
-                </Tab>
-              );
-            })}
+                </Grid>
+              </Tab>
+            ))}
           </TabPane>
         )
           : <p>Loading...</p>}
