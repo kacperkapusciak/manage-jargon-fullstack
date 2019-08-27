@@ -18,6 +18,8 @@ const TabLabel = styled.div`
   transition: all 250ms ease-in;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  user-select: none;
+  
   &:first-child {
     border-left: 1px solid #ccc;
     border-radius: 20px 0 0 20px;
