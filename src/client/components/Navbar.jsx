@@ -10,6 +10,7 @@ const Nav = styled.nav`
   width: 100vw;
   align-items: center;
   height: 60px;
+  border-bottom: 1px solid #ddd;
 `;
 
 const Wrapper = styled.div`

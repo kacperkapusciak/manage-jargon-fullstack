@@ -5,12 +5,12 @@ const admin = require('../middleware/admin');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   const jargonTerms = await Jargon.find().sort('name');
   return res.send(jargonTerms);
 });
 
-router.get('/tabs', async (req, res) => {
+router.get('/tabs', auth, async (req, res) => {
   const jargonTerms = await Jargon.find().sort('name');
   const names = jargonTerms.map(term => term.name);
   const firstLetters = names.map(name => name.charAt(0).toUpperCase());

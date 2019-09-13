@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
+import useAxios from 'axios-hooks';
+
+import { withAuth } from '../providers/AuthProvider';
 
 import Container from '../components/Container';
 import Input from '../components/Input';
 import TabPane, { Tab } from '../components/TabPane';
 import Card from '../components/Card';
-import Navbar from '../components/Navbar';
 
 const Grid = styled.div`
   display: grid;
@@ -18,47 +19,39 @@ const Grid = styled.div`
   }
 `;
 
-const Dashboard = () => {
-  const [tabbedTerms, setTabbedTerms] = useState();
-
-  useEffect(() => {
-    async function fetchData() {
-      const result = await axios.get('/api/jargon/tabs');
-      setTabbedTerms(result.data);
-    }
-
-    fetchData();
-  }, []);
+const Dashboard = ({ auth }) => {
+  const [{ data: tabbedTerms, loading, error }, refetch] = useAxios({
+    url: '/api/jargon/tabs',
+    method: 'GET',
+    headers: { 'x-auth-token': auth.authToken },
+  });
 
   return (
-    <>
-      <Navbar />
-      <main>
-        <Container>
-          <Input placeholder="Add new jargon item..." />
-          <h2>All Jargon</h2>
-          {tabbedTerms ? (
-            <TabPane>
-              {Object.keys(tabbedTerms).map(tabName => (
-                <Tab key={tabName} title={tabName}>
-                  <Grid>
-                    {tabbedTerms[tabName].map(term => (
-                      <Card
-                        key={term._id}
-                        name={term.name}
-                        description={term.description}
-                      />
-                    ))}
-                  </Grid>
-                </Tab>
-              ))}
-            </TabPane>
-          )
-            : <p>Loading...</p>}
-        </Container>
-      </main>
-    </>
+    <main>
+      <Container>
+        <Input placeholder="Add new jargon item..." />
+        <h2>All Jargon</h2>
+        {!loading ? (
+          <TabPane>
+            {Object.keys(tabbedTerms).map(tabName => (
+              <Tab key={tabName} title={tabName}>
+                <Grid>
+                  {tabbedTerms[tabName].map(term => (
+                    <Card
+                      key={term._id}
+                      name={term.name}
+                      description={term.description}
+                    />
+                  ))}
+                </Grid>
+              </Tab>
+            ))}
+          </TabPane>
+        )
+          : <p>Loading...</p>}
+      </Container>
+    </main>
   );
 };
 
-export default Dashboard;
+export default withAuth(Dashboard);
