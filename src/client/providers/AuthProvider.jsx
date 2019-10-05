@@ -1,6 +1,4 @@
-import React, {
-  useState, useEffect, useContext, createContext
-} from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 
 const AuthContext = createContext();
@@ -33,7 +31,7 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-const withAuth = Component => (props) => {
+const withAuth = Component => props => {
   const value = useContext(AuthContext);
   return <Component auth={value} {...props} />;
 };

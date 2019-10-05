@@ -8,7 +8,9 @@
     "start": "npm run build && node src/server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon src/server/index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "pretty-quick": "pretty-quick",
+    "format": "pretty-quick"
   },
   "proxy": "http://localhost:8080",
   "author": "Kacper Kapuściak",
@@ -23,7 +25,6 @@
     "config": "^3.2.3",
     "express": "^4.16.3",
     "formik": "^1.5.8",
-    "history": "^4.10.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "mongoose": "^5.7.3",
@@ -53,12 +54,19 @@
     "eslint-plugin-react": "^7.16.0",
     "file-loader": "^3.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "husky": "^3.0.8",
     "nodemon": "^1.19.3",
     "prettier": "1.18.2",
+    "pretty-quick": "^1.11.1",
     "style-loader": "^0.23.0",
     "url-loader": "^1.0.1",
     "webpack": "^4.41.0",
     "webpack-cli": "^3.3.9",
     "webpack-dev-server": "^3.8.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick"
+    }
   }
 }
