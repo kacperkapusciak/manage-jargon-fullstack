@@ -7,7 +7,7 @@ const Wrapper = styled.section`
   border-radius: 15px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   padding: 24px;
-  
+
   p {
     max-height: 205px;
     overflow: auto;

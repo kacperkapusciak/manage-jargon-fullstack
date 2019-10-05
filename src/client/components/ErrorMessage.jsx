@@ -9,4 +9,8 @@ export const ErrorMessageStyled = styled.div`
   color: #ff6347;
 `;
 
-export default props => <ErrorMessageStyled><ErrorMessage {...props} /></ErrorMessageStyled>;
+export default props => (
+  <ErrorMessageStyled>
+    <ErrorMessage {...props} />
+  </ErrorMessageStyled>
+);

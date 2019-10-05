@@ -14,7 +14,7 @@ const AuthProvider = ({ children }) => {
     if (tokenFromLocalStorage) setToken(tokenFromLocalStorage);
   }, []);
 
-  const login = (authToken) => {
+  const login = authToken => {
     localStorage.setItem('token', authToken);
     setToken(authToken);
     return <Redirect to="/dashboard" />;
@@ -27,7 +27,9 @@ const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ token, setToken, login, logout }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ token, setToken, login, logout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

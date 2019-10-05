@@ -13,7 +13,7 @@ const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -23,7 +23,7 @@ const Dashboard = ({ auth }) => {
   const [{ data: tabbedTerms, loading, error }, refetch] = useAxios({
     url: '/api/jargon/tabs',
     method: 'GET',
-    headers: { 'x-auth-token': auth.token },
+    headers: { 'x-auth-token': auth.token }
   });
 
   return (
@@ -37,18 +37,15 @@ const Dashboard = ({ auth }) => {
               <Tab key={tabName} title={tabName}>
                 <Grid>
                   {tabbedTerms[tabName].map(term => (
-                    <Card
-                      key={term._id}
-                      name={term.name}
-                      description={term.description}
-                    />
+                    <Card key={term._id} name={term.name} description={term.description} />
                   ))}
                 </Grid>
               </Tab>
             ))}
           </TabPane>
-        )
-          : <p>Loading...</p>}
+        ) : (
+          <p>Loading...</p>
+        )}
       </Container>
     </main>
   );

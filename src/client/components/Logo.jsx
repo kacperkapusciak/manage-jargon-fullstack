@@ -7,9 +7,9 @@ const Logo = styled.div`
   color: #ffb955;
   letter-spacing: -2px;
   text-decoration: underline #bfbfbf;
-  
+
   &:after {
-    content: "Jargona";
+    content: 'Jargona';
   }
 `;
 

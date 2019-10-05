@@ -17,7 +17,7 @@ const Box = styled.section`
   width: 600px;
   border: 1px solid #ddd;
   border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   padding: 20px;
 `;
 const Title = styled.header`
@@ -33,21 +33,26 @@ const ButtonStyled = styled(Button)`
 `;
 
 const LoginSchema = yup.object().shape({
-  username: yup.string()
+  username: yup
+    .string()
     .min(5, 'Username is too short!')
     .max(70, 'Username is too long!')
     .required('Username is required!'),
-  password: yup.string()
+  password: yup
+    .string()
     .min(5, 'Password is too short.')
     .max(70, 'Username is too long.')
-    .required('Password is required!'),
+    .required('Password is required!')
 });
 
 const LoginForm = ({ auth }) => {
-  const [{ data: authToken, loading, error }, loginUser] = useAxios({
-    url: '/api/auth',
-    method: 'POST'
-  }, { manual: true });
+  const [{ data: authToken, loading, error }, loginUser] = useAxios(
+    {
+      url: '/api/auth',
+      method: 'POST'
+    },
+    { manual: true }
+  );
 
   if (!loading && authToken) {
     auth.login(authToken);
@@ -59,29 +64,21 @@ const LoginForm = ({ auth }) => {
         <Title>Sign in to your account</Title>
         <Formik
           initialValues={{ username: '', password: '' }}
-          onSubmit={(values) => {
+          onSubmit={values => {
             loginUser({ data: { ...values } });
           }}
           validationSchema={LoginSchema}
           render={() => (
             <Form>
               <Label htmlFor="username">Username</Label>
-              <Field
-                name="username"
-                render={({ field }) => (
-                  <Input type="text" {...field} />
-                )}
-              />
+              <Field name="username" render={({ field }) => <Input type="text" {...field} />} />
               <ErrorMessage name="username" />
               <Label htmlFor="password">Password</Label>
-              <Field
-                name="password"
-                render={({ field }) => (
-                  <Input type="password" {...field} />
-                )}
-              />
+              <Field name="password" render={({ field }) => <Input type="password" {...field} />} />
               <ErrorMessage name="password" />
-              <ButtonStyled type="submit" unsized>Sign in</ButtonStyled>
+              <ButtonStyled type="submit" unsized>
+                Sign in
+              </ButtonStyled>
             </Form>
           )}
         />

@@ -20,7 +20,7 @@ const TabLabel = styled.div`
   border-bottom: 1px solid #ccc;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   user-select: none;
-  
+
   &:first-child {
     border-left: 1px solid #ccc;
     border-radius: 20px 0 0 20px;
