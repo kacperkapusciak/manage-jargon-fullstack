@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Button = styled.button`
     padding: 10px 35px;
-    margin: 1rem 0;
+    margin: 0;
     background: ${({ outline }) => (outline ? 'none' : 'rgb(52, 95, 144)')};
     color: ${({ outline }) => (outline ? 'rgb(52, 95, 144)' : '#f5f5f5')};
     font-weight: bold;

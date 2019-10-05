@@ -23,7 +23,7 @@ const Dashboard = ({ auth }) => {
   const [{ data: tabbedTerms, loading, error }, refetch] = useAxios({
     url: '/api/jargon/tabs',
     method: 'GET',
-    headers: { 'x-auth-token': auth.authToken },
+    headers: { 'x-auth-token': auth.token },
   });
 
   return (

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import useAxios from 'axios-hooks';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
-import { Redirect } from 'react-router-dom';
 
 import { withAuth } from '../../providers/AuthProvider';
 
@@ -21,7 +20,6 @@ const Box = styled.section`
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   padding: 20px;
 `;
-
 const Title = styled.header`
   color: #000;
   font-weight: normal;
@@ -29,6 +27,9 @@ const Title = styled.header`
   padding-bottom: 16px;
   border-bottom: 1px solid #ddd;
   margin-bottom: 16px;
+`;
+const ButtonStyled = styled(Button)`
+  margin: 1rem 0;
 `;
 
 const LoginSchema = yup.object().shape({
@@ -49,9 +50,7 @@ const LoginForm = ({ auth }) => {
   }, { manual: true });
 
   if (!loading && authToken) {
-    localStorage.setItem('token', authToken);
-    auth.setAuthToken(authToken);
-    return <Redirect to="/dashboard" />
+    auth.login(authToken);
   }
 
   return (
@@ -82,7 +81,7 @@ const LoginForm = ({ auth }) => {
                 )}
               />
               <ErrorMessage name="password" />
-              <Button type="submit" unsized>Submit</Button>
+              <ButtonStyled type="submit" unsized>Sign in</ButtonStyled>
             </Form>
           )}
         />
